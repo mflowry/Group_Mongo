@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  div#assignments
+      each assignment in assignments
+        p= assignment.name
+        p= assignment.assignment_name
+        p= assignment.score
+        p= assignment.date_completed
