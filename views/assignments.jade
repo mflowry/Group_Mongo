@@ -1,9 +1,25 @@
 extends layout
 
 block content
+
+  //- form to submit assignments
+  form(method="POST")
+    fieldset
+      div#newAssign
+        label(for="Student_name") Enter student name:
+        input(type="text" id="Student_name" name="name")
+        label(for="Assignment_name") Enter assignment name:
+        input(type="text" id="Assignment_name" name="assignment_name")
+        label(for="Score") Enter assignment score:
+        input(type="number" id="Score" name="score")
+        label(for="Completion_date") Enter completion date:
+        input(type="date" id="Completion_date" name="date_completed")
+        input(type="submit" value="Add new assignment")
+  //- div that serves as container for assignments
   div#assignments
+      //- each displays when the page loads prior to first set interval in jquery/ajax
       each assignment in assignments
-        p= assignment.name
-        p= assignment.assignment_name
-        p= assignment.score
-        p= assignment.date_completed
+        -var text= assignment.name+ ": "+ assignment.assignment_name+ ", " +assignment.score+", "+ assignment.date_completed
+        p= text
+        //- these buttons only function within the first five seconds and are replaced by identical jquery buttons
+        button(class=assignment.id) delete

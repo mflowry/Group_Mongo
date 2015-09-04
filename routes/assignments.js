@@ -27,7 +27,7 @@ router.get('/ajax/:id?', function (req, res, next) {
     });
   }
 });
-/* GET all users or one by Username */
+/* GET all assignmets or one by id */
 router.get('/:id?', function (req, res, next) {
 
   if (req.params.id) {
@@ -66,32 +66,15 @@ router.get('/:id?', function (req, res, next) {
     res.send(JSON.stringify(assignment));
   });
 
-  /* PUT: Updateds the properties of the user with the matching username*/
-  router.put('/:username', function (req, res, next) {
-    User.findOneAndUpdate({username: req.params.username}
-        , {location: req.body.location}, function (err, user) {
-          if (err) {
-            console.log(err);
-            next(err);
-          }
-          else if (!user) {
-            res.json('No user found by that username');
-          }
-          else {
-            // NOTE: This is not the updated user object. It returns the old copy that was found by the query
-            res.json(user)
-          }
-        })
-  });
-
-  /* DELETE: removes and entry from the db */
-  router.delete('/:username', function (req, res, next) {
-    User.findOne({username: req.params.username}, function (err, user) {
+  /* DELETE: removes an entry from the db */
+  router.delete('/:id', function (req, res, next) {
+    console.log('req.param', req.params.id);
+    Assignment.findById(req.params.id, function (err, assignment) {
       if (err) {
         console.log(err);
         next(err);
       } else {
-        user.remove(function (err) {
+        assignment.remove(function (err) {
           if (err) {
             console.log(err);
             next(err);
